@@ -13,14 +13,12 @@ import java.util.List;
 
 public class SteamCrawler {
     public static void main(String[] args) {
-        // Set the Microsoft Edge WebDriver path
         System.setProperty("webdriver.edge.driver", "D:\\Java\\untitled\\src\\main\\resources\\msedgedriver.exe");
 
-        // Initialize the EdgeDriver
         WebDriver driver = new EdgeDriver();
 
         // Steam 상점에서, Special Offer 태그 클릭, 원하는 태그 클릭한 후 브라우저 링크를 여기에 붙여넣고, FirebaseManager에서 gameTag 수정
-        driver.get("https://store.steampowered.com/search/?tags=1667&supportedlang=english&specials=1&ndl=1");
+        driver.get("https://store.steampowered.com/search/?tags=599&supportedlang=english&specials=1&hidef2p=1&ndl=1");
 
         try {
             Thread.sleep(5000);
@@ -28,13 +26,12 @@ public class SteamCrawler {
             e.printStackTrace();
         }
 
-        // Get the page source after JavaScript rendering
+
         String pageSource = driver.getPageSource();
 
-        // Parse the page source with Jsoup
         Document document = Jsoup.parse(pageSource);
 
-        // Extract game information
+
         List<GameInfoContainer> gameInfoContainerList = new ArrayList<>();
 
         Elements gameElements = document.select(".search_result_row");
@@ -55,7 +52,6 @@ public class SteamCrawler {
             gameInfo.setDiscountPrice(discountedPrice);
             gameInfo.setDiscountRate(discountRate);
 
-            // Print or store the extracted information as needed
             System.out.println("Title: " + gameTitle);
             System.out.println("Link: " + gameLink);
             System.out.println("Original Price: " + originalPrice);
@@ -69,7 +65,6 @@ public class SteamCrawler {
 
         FirebaseManager.saveGamesToFirestore(gameInfoContainerList);
 
-        // Close the WebDriver
         driver.quit();
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class FirebaseManager {
 
-    private static String gameTag = "Horror";
+    private static String gameTag = "Simulation";
     static Firestore firestore;
 
     static {
